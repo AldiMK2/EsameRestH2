@@ -19,6 +19,8 @@ import java.util.Date;
             return args -> {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 log.info("Preloading " +  repository.save(new Prodotto("Pasta", dateFormat.parse("25-02-2002"),2.00f)));
+                log.info("Preloading " +  repository.save(new Prodotto("Pesto", dateFormat.parse("05-07-2022"),3.00f)));
+                log.info("Preloading " +  repository.save(new Prodotto("Ragù", dateFormat.parse("08-010-2021"),2.50f)));
             };
         }
     }

@@ -1,5 +1,6 @@
-package it.devlec.esame.avviso;
+package it.devlec.esame.controller;
 
+import it.devlec.esame.avviso.ProdottoNonTrovato;
 import it.devlec.esame.model.Prodotto;
 import it.devlec.esame.repository.ProdottoRepository;
 import org.springframework.web.bind.annotation.*;
