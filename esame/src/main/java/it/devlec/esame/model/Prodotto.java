@@ -12,7 +12,8 @@ public class Prodotto {
     private Long id;
     private String nome;
     private Date dataDiAcquisto;
-    private Float prezzo;
+    private float prezzo;
+    private float ranking;
 
     public Prodotto() {
 
@@ -21,6 +22,11 @@ public class Prodotto {
     public Prodotto (String nome, Date dataDiAcquisto, Float prezzo) {
         this.nome = nome;
         this.dataDiAcquisto=dataDiAcquisto;
+        this.prezzo=prezzo;
+    }
+    public Prodotto (String nome, Float prezzo) {
+        this.nome = nome;
+        this.dataDiAcquisto=new Date();
         this.prezzo=prezzo;
     }
 
@@ -48,11 +54,19 @@ public class Prodotto {
         this.dataDiAcquisto = dataDiAcquisto;
     }
 
-    public Float getPrezzo() {
+    public float getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(Float prezzo) {
+    public void setPrezzo(float prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public float getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(float ranking) {
+        this.ranking = ranking;
     }
 }
