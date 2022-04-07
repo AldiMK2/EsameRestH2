@@ -4,9 +4,11 @@ import it.devlec.esame.avviso.ProdottoNonTrovato;
 import it.devlec.esame.model.Prodotto;
 import it.devlec.esame.repository.ProdottoRepository;
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.http.HttpResponse;
+import java.nio.file.Paths;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ProdottoRestController<logger> {
@@ -73,16 +78,26 @@ public class ProdottoRestController<logger> {
     }
 
 
+
+    private static final Logger logger = LogManager.getLogger(ProdottoRestController.class);
+    private String[] INTESTAZIONE = {"Prodotto", "Prezzo"};
+    private Map<String, String> MIEI_AUTORI = new HashMap<>() {
+        {
+            put("Pasta", "2.00");
+            put("Pesto", "3.00");
+            put("Ragù", "2.50");
+        }
+    };
     @PostMapping("/prodotti/csv")
-    public ResponseEntity<String> caricaCSV(@RequestParam("file") @NotNull MultipartFile file) {
-        Logger logger = LoggerFactory.getLogger(ProdottoRestController.class);
+    public ResponseEntity<String> leggiCSV(@RequestParam(name = "file")MultipartFile file) {
         Reader in = null;
         try {
             in = new InputStreamReader(file.getInputStream());
-            //Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(in);
-            Iterable<CSVRecord> records = CSVFormat.DEFAULT.builder().build().parse(in);
+            // Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(in);
+            Iterable<CSVRecord> records = CSVFormat.DEFAULT.builder().setSkipHeaderRecord(true)
+                    .setHeader(INTESTAZIONE).build().parse(in);
             for (CSVRecord record : records) {
-                String prodotto = record.get(0);
+                String prodotto = record.get(INTESTAZIONE[0]);
                 logger.info("Prodotto: " + prodotto);
                 String prezzo = record.get(1);
                 logger.warn("Prezzo: " + prezzo);
@@ -90,7 +105,6 @@ public class ProdottoRestController<logger> {
         } catch (IOException e) {
             logger.error("Si è verificato un errore", e);
         }
-        return ResponseEntity.ok("CSV");
+        return ResponseEntity.ok("Csv caricato");
     }
-
 }
