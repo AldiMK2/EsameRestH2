@@ -13,7 +13,6 @@ public class Prodotto {
     private String nome;
     private Date dataDiAcquisto;
     private float prezzo;
-    private float ranking;
 
     public Prodotto() {
 
@@ -62,11 +61,11 @@ public class Prodotto {
         this.prezzo = prezzo;
     }
 
-    public float getRanking() {
-        return ranking;
+   /* public float getRanking() {
+        return prezzo;
     }
 
-    public void setRanking(float ranking) {
-        this.ranking = ranking;
-    }
+    public void setRanking(float prezzo) {
+        this.prezzo = prezzo;
+    }*/
 }

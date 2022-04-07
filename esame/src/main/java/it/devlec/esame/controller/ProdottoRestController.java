@@ -38,12 +38,12 @@ public class ProdottoRestController {
         return repository.findByDataDiAcquistoBetween(datada,dataa);
     }
 
-    @GetMapping("/prodotti/ricercaranking")
-    public List<Prodotto> ricercaProdottoRanking(
+    @GetMapping("/prodotti/ricercaprezzo")
+    public List<Prodotto> ricercaProdottoPrezzo(
             @RequestParam(name = "min") float min,
             @RequestParam(name = "max") float max
     ){
-        return repository.findByRankingBetween(min,max);
+        return repository.findByPrezzoBetween(min,max);
     }
 
     @PutMapping("/prodotti/{id}")
